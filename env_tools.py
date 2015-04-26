@@ -32,6 +32,10 @@ def apply_env(env=None):
     Apply the given env to os.environ just like using `foreman run` would.
     """
     if not env:
-        env = load_env()
+        # don't raise when the default .env is missing
+        try:
+            env = load_env()
+        except IOError:
+            return
 
     os.environ.update(env)

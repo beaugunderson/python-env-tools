@@ -12,7 +12,7 @@ setup(
 
     keywords='.env env heroku procfile foreman',
 
-    version='1.0',
+    version='2.0.0',
 
     license='MIT',
 
