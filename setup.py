@@ -19,7 +19,7 @@ setup(
     py_modules=['env_tools'],
 
     install_requires=[
-        'tini>=3.0.0',
+        'tini>=3.0.1',
     ],
 
     setup_requires=[
