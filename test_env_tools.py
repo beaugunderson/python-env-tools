@@ -1,6 +1,6 @@
 import os
 
-from env_tools import apply_env, load_env
+from env_tools import apply_env, env_to_bool, load_env
 
 
 def assert_env(env):
@@ -42,3 +42,27 @@ def test_apply_env_defaults():
     apply_env()
 
     assert_env(os.environ)
+
+
+def test_env_to_bool():
+    """
+    Test that env_to_bool does what's expected.
+    """
+    os.environ['TEST_TRUE'] = 'true'
+    os.environ['TEST_YES'] = 'yes'
+    os.environ['TEST_1'] = '1'
+
+    os.environ['TEST_FALSE'] = 'false'
+    os.environ['TEST_NO'] = 'no'
+    os.environ['TEST_0'] = '0'
+
+    assert env_to_bool('TEST_TRUE') is True
+    assert env_to_bool('TEST_YES') is True
+    assert env_to_bool('TEST_1') is True
+
+    assert env_to_bool('TEST_FALSE') is False
+    assert env_to_bool('TEST_NO') is False
+    assert env_to_bool('TEST_0') is False
+
+    assert env_to_bool('DOES_NOT_EXIST', default=False) is False
+    assert env_to_bool('DOES_NOT_EXIST', default=True) is True

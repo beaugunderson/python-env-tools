@@ -1,6 +1,8 @@
 import io
 import os
 
+from distutils import util  # pylint: disable=no-name-in-module
+
 from tini import Tini, StripQuotesInterpolation
 
 
@@ -39,3 +41,10 @@ def apply_env(env=None):
             return
 
     os.environ.update(env)
+
+
+def env_to_bool(env, default='false'):
+    """
+    Convert a string like 'true' or 'false' to a bool.
+    """
+    return bool(util.strtobool(os.getenv(env, str(default))))
