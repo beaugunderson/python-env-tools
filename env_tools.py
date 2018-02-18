@@ -3,7 +3,31 @@ import os
 
 from distutils import util  # pylint: disable=no-name-in-module
 
+from six import iteritems
 from tini import Tini, StripQuotesInterpolation
+
+
+def get_enforcement_context():
+    context = {}
+
+    def require_env(name, default=None):
+        value = os.getenv(name, default)
+        context[name] = value
+
+        return value
+
+    def enforce_required_envs():
+        missing_envs = [name for name, value in iteritems(context)
+                        if value is None]
+
+        if missing_envs:
+            missing_env_list = '\n'.join(missing_envs)
+
+            raise ValueError(
+                'Required environment variables missing:\n{}'.format(
+                    missing_env_list))
+
+    return require_env, enforce_required_envs
 
 
 class NamedStringIO(io.StringIO):

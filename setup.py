@@ -12,13 +12,14 @@ setup(
 
     keywords='.env env heroku procfile foreman',
 
-    version='2.1.0',
+    version='2.2.0',
 
     license='MIT',
 
     py_modules=['env_tools'],
 
     install_requires=[
+        'six>=1.2.0',
         'tini>=3.0.1',
     ],
 

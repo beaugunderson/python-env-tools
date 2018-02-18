@@ -1,6 +1,6 @@
 import os
 
-from env_tools import apply_env, env_to_bool, load_env
+from env_tools import apply_env, env_to_bool, get_enforcement_context, load_env
 
 
 def assert_env(env):
@@ -66,3 +66,25 @@ def test_env_to_bool():
 
     assert env_to_bool('DOES_NOT_EXIST', default=False) is False
     assert env_to_bool('DOES_NOT_EXIST', default=True) is True
+
+
+def test_require_env():
+    os.environ['TEST_IS_NOT_NULL'] = 'true'
+
+    require_env, enforce_required_envs = get_enforcement_context()
+
+    require_env('TEST_IS_NOT_NULL')
+    require_env('FAILED_TEST_IS_NOT_SET')
+
+    exception_happened = False
+
+    try:
+        enforce_required_envs()
+    except ValueError as e:
+        exception_happened = True
+        exception_string = str(e)
+
+        assert 'TEST_IS_NOT_NULL' not in exception_string
+        assert 'FAILED_TEST_IS_NOT_SET' in exception_string
+
+    assert exception_happened is True
