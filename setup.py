@@ -6,7 +6,6 @@ setup(
     author_email="beau@beaugunderson.com",
     url="https://github.com/beaugunderson/python-env-tools",
     description="Tools for using .env files in Python",
-    long_description_markdown_filename="README.md",
     keywords=".env env heroku procfile foreman",
     version="2.3.0",
     license="MIT",
@@ -14,9 +13,6 @@ setup(
     install_requires=[
         "six>=1.2.0",
         "tini>=3.0.1",
-    ],
-    setup_requires=[
-        "setuptools-markdown",
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
